@@ -16,6 +16,6 @@ function archiveExpCode(expNum)
         mkdir([dataDirectory,dNum]);
     end
     expName = [dataDirectory,dNum,'/Exp',dNum,'_',num2str(expNum),'.m'];
-    [ST,I] = dbstack();   
-    copyfile(ST(2).file,expName);
+    [ST,I] = dbstack();
+    copyfile(which(ST(2).name),expName);
     disp(['Archived ',ST(2).file,' to ',expName]);

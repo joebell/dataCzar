@@ -10,7 +10,7 @@
 %%
 function fileName = getDataFileName(prefixCode, expNum)
 
-    microCzarSetings;   % Loads settings
+    microCzarSettings;   % Loads settings
   
     % Come up with the next file name in the sequence
     dNum = datestr(now,'YYmmDD');
