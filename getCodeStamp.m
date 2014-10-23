@@ -30,7 +30,7 @@ function stampString = getCodeStamp(varargin)
         disp('--- Invalid levelsDown, using current directory. ---');
         callingDir = currentDir;
     else
-        callingDir = regexprep(which(ST(2 + levelsDown).name),['/',ST(2 + levelsDown).file],'');
+        callingDir = regexprep(which(ST(2 + levelsDown).name),['/|\\',ST(2 + levelsDown).file],'');
     end
 
     % Change to the calling directory
