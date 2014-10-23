@@ -1,9 +1,12 @@
 %%
 %   archiveExpCode(expNum)
 %
-%   Saves the calling script to the data directory. Filename is:
+%   Saves the calling script to the data directory. If there's already a 
+%   script there for that expNum it is over-written.
 %
-%   /dataDirectory/YYMMDD/Exp_expNum.m
+%   Filename is:
+%
+%		dataDirectory/YYMMDD/Exp_expNum.m
 %
 %%
 function archiveExpCode(expNum)

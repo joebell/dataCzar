@@ -3,7 +3,7 @@
 %
 %   Returns the full path of a fileName in which to store data. Format is:
 %
-%   /dataDirectory/YYMMDD/prefixCodeYYMMDD_expNum_nextSequentialNumber.mat
+%   dataDirectory/YYMMDD/prefixCodeYYMMDD_expNum_nextSequentialNumber.mat
 %       
 %
 %   JSB 3/22/2013

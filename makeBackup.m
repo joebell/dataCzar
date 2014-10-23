@@ -1,3 +1,7 @@
+%% 
+% 
+%	Runs the backupScript stored in microCzarSettings()
+%
 function makeBackup()
 
     microCzarSettings;

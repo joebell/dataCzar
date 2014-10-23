@@ -5,6 +5,10 @@
 %       repository housing the calling function. It appends a * if there 
 %       are uncommitted changes.
 %
+%       If levelsDown is specified and greater than 0, the script looks
+%       for the repo of the caller of the calling function, on down the
+%       calling stack.
+%
 %%
 function stampString = getCodeStamp(varargin)  
 

@@ -10,19 +10,30 @@
 %       To use microCzar you'll need to do some system setup. It varies by
 %       type of system, but will work in Windows, Mac, and Linux.
 %
-%       
-%       Cygwin - If you're using Windows, you'll need to install Cygwin in
-%       order to use the unix tools that microCzar needs. Mac and Linux
-%       systems will have everything they need by default.
-%           http://cygwin.com/install.html
+%   Installation instructions:
 %
+%		Step 1: Install rsync and git
 %
-%       git - Git is a version control system that you should use to keep
-%       track of your code. You can download it here: 
-%           http://git-scm.com/downloads
-%       You should also setup an account on GitHub, a free service that
-%       works with git to keep off-site backups of your code.
-%           http://www.github.com
+%		Mac and Linux
+%
+%			(1) Make sure rsync and git are installed.
+%
+%		Windows
+%
+%		(1) First, install Cygwin. (http://cygwin.com). This is a free package 
+%		that allows you to use unix-style tools. Make sure that you also 
+%		install the packages 'rsync' 'ssh' and 'git'. (These may be 
+%		installed by default.
+%
+%		(2) Now add the Cygwin directory to your Windows path. At the MATLAB
+%		prompt type:>> system('rsync -h')  If you don't see the rsync help 
+%		information you've done something wrong.
+%
+%		(Detailed instructions for steps 1-2: http://www.howtogeek.com/howto/
+%		 41382/how-to-use-linux-commands-in-windows-with-cygwin/ Note that your
+%		 Cygwin directory may be called C:\cygwin64\bin or something similar.)
+%
+%		Step 2: Get a GitHub account at www.github.com
 %
 %       Git is a super-powerful tool, but may take a few hours to learn to
 %       use. It's worth it. Good tutorials:
@@ -30,23 +41,47 @@
 %           https://www.codeschool.com/courses/try-git
 %           http://git-scm.com/docs/gittutorial
 %
-%
-%       rsync - Rsync is a powerful file synchronization tool that compares
-%       local and remote directories, and transmits only parts of files
-%       that have changed.
-%           http://rsync.samba.org/download.html
-%
-%
-%       ssh - SSH is a program for secure remote logins. git and rsync both
-%       use SSH to allow you to login to your backup servers without typing
-%       in a password.
-%
+%       The GitHub for Windows GUI is a very good front-end to Git.
 %       
-%       Get an orchestra account:
+%       Step 3: Setup an account on Orchestra
 %
+%		(1) Get an orchestra account (http://rc.hms.harvard.edu)
+%		(2) Make a directory on orchestra for your data. (mkdir ~/Data/ePhys/)
+%		(3) Setup aliases
 %
-%       Setting up keyless login to orchestra:
+%			in ~/.ssh/config add:
+%				
+%			Host orch
+%				User jsb38 [replace with your username...]
+%				HostName mezzanine.med.harvard.edu
 %
+%		Step 4: Setup keyless login:
+%			
+%			Mac, Linux: run keygen
 %
-%       Setting up keyless login to git:
+%			Cygwin: run ssh-keygen -t rsa
 %
+%			Then for both:
+%
+%				cat ~/.ssh/id_rsa.pub | ssh orch 'cat >> ~/.ssh/authorized_keys'
+%
+%			Then ssh to orchestra and:
+%
+%				chmod 700 ~/.ssh
+%				chmod 644 ~/.ssh/id_rsa.pub
+%
+%		Step 5: Setup dataCzar
+%
+%			Download and unzip it (github.com/joebell/dataCzar)
+%			Add it to the MATLAB path
+%			Open microCzarSettings.m and edit it. 
+%				dataDirectory - Root directory for storing data. If you're in Windows
+%					this should be a normal windows path eg. 'C:\Users\Alex\Data' and 
+%					NOT a cygwin path ('~/Data').
+%				backupScript - Edit this until it works. Examples:
+%
+%					Mac: 'rsync -rite ssh ~/Data/ orch:~/Data/ePhys/'
+%					Cygwin: 'rsync -rite ssh ''/cygdrive/c/Users/Alex/Data'' orch:~/Data/Ephys'
+%
+%		Done!
+%			
