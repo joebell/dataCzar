@@ -42,7 +42,9 @@ function stampString = getCodeStamp(varargin)
     cd(callingDir);
     
     % Figure out the top level directory we're in
-    printPath = regexprep(callingDir,'.*/','');
+    % repoName = regexprep(callingDir,'.*/','');
+    [status, repoName] = system('basename `git rev-parse --show-toplevel`');
+    repoName = regexprep(repoName,'\n','');
     
     % Get the current hash
     [status, shortHash] = system('git rev-parse --short HEAD');
@@ -63,6 +65,6 @@ function stampString = getCodeStamp(varargin)
     % Change back to the directory we started in
     cd(currentDir);
 
-    stampString = [printPath,'-',shortHash,currentFlag];
+    stampString = [repoName,'-',shortHash,currentFlag];
     
 
