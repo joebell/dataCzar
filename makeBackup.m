@@ -1,10 +1,11 @@
 %% 
 % 
-%	Runs the backupScript stored in microCzarSettings()
+%	Runs a backup script.
 %
 function makeBackup()
 
-    microCzarSettings;
+    % backupScript  = ['rsync -rite ssh ~/Desktop/Data/ orch:~/ephys/Data/'];
+    backupScript = ['echo Backup script not configured.'];
     
     disp(['Backuping up using: ',backupScript]);
     system(backupScript,'-echo');

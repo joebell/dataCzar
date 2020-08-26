@@ -7,8 +7,10 @@
 %
 %       If levelsDown is specified and greater than 0, the script looks
 %       for the repo of the caller of the calling function, on down the
+%       calling stack. If levels down is -1 then it uses the bottom of the
 %       calling stack.
 %
+% JSB 08/2020
 %%
 function stampString = getCodeStamp(varargin)  
 
@@ -17,24 +19,23 @@ function stampString = getCodeStamp(varargin)
     else
         levelsDown = 0;
     end
-
-    % Get the hostname
-    % [status, hostname] = system('hostname');
-    % hostname = regexprep(hostname,'\n','');
     
     % Record the old current directory
     currentDir = pwd();
     
     % Change to the calling directory
     [ST,I] = dbstack();
-    % If there's no calling file
+    % If there's no calling file    
     if (length(ST) < 2)
         callingDir = currentDir;
+    % Use the bottom level    
+    elseif levelsDown == -1
+        callingDir = regexprep(which(ST(end).name),['(/|\\)',ST(end).file],'');
     elseif (length(ST) < (2 + levelsDown))
         disp('--- Invalid levelsDown, using current directory. ---');
         callingDir = currentDir;
     else
-        callingDir = regexprep(which(ST(2 + levelsDown).name),['/|\\',ST(2 + levelsDown).file],'');
+        callingDir = regexprep(which(ST(2 + levelsDown).name),['(/|\\)',ST(2 + levelsDown).file],'');
     end
 
     % Change to the calling directory
@@ -49,7 +50,7 @@ function stampString = getCodeStamp(varargin)
     
     % Find out if the repository is current
     [status, gitStatus] = system('git status');
-    if isempty(regexp(gitStatus,'working directory clean'))
+    if isempty(regexp(gitStatus,'working tree clean'))
         % Working directory isn't clean, there are un-committed changes
         currentFlag = '*';
         if ~isempty(regexp(gitStatus,'Not a git repository'))
@@ -58,8 +59,10 @@ function stampString = getCodeStamp(varargin)
     else
         currentFlag = '';
     end
-
-    stampString = [printPath,'-',shortHash,currentFlag];
     
     % Change back to the directory we started in
     cd(currentDir);
+
+    stampString = [printPath,'-',shortHash,currentFlag];
+    
+
